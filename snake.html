@@ -1,0 +1,32 @@
+<!Doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/LinkedList-0.1.js"></script>
+<script type="text/javascript" src="js/easeljs/easeljs-0.6.0.min.js"></script>
+<script type="text/javascript" src="js/snake.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var snake = new Snake("canvas");
+		$(document).keypress(function(e){
+			if(e.which == 32){
+				if(snake.isPause()){
+					snake.start();
+				}else{
+					snake.pause();
+				}
+			}else{
+				if(e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40){
+					snake.setDirection(e.keyCode);
+				}
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<canvas width="300" height="300" id="canvas" style="background:#ff0"></canvas>
+</body>
+</html>
+
