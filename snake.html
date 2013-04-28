@@ -9,10 +9,19 @@
 <script type="text/javascript">
 	$(function(){
 		var snake = new Snake("canvas");
-		$(document).keypress(function(e){
+		$(document).keydown(function(e){
 			if(e.which == 32){
 				if(snake.isPause()){
 					snake.start();
+					snake.addZhuangqiangHandler(function(){
+						alert("你撞墙了");
+					});
+					snake.addEatBodyHandler(function(){
+						alert("你咬到自己了");
+					});
+					snake.addEatFoodHandler(function(score){
+						$("#score").text(score);
+					})
 				}else{
 					snake.pause();
 				}
@@ -26,7 +35,9 @@
 </script>
 </head>
 <body>
-	<canvas width="300" height="300" id="canvas" style="background:#ff0"></canvas>
+	<div>空格键为暂定于开始，方向键控制方向</div>
+	<div>您的得分<span  id="score" style="color:red;">0</span>分</div>
+	<canvas width="300" height="300" id="canvas" style="background:#ff0">您的浏览器不支持HTML5</canvas>
 </body>
 </html>
 
