@@ -3,6 +3,22 @@ var Snake = (function(){
 	var Body = function(x,y){
 		this.x = x;
 		this.y = y;
+		var WIDTH = 30;
+		this.draw = function(stage){
+			var shape = new createjs.Shape();
+			shape.graphics.ss("#ffffff").f("#000000").r(this.x,this.y,WIDTH,WIDTH);
+			stage.addChild(shape);
+		}
+	}
+	var Food = function(x,y){
+		this.x = x;
+		this.y = y;
+		var WIDTH = 30;
+		this.draw =  function(stage){
+			var shape = new createjs.Shape();
+			shape.graphics.ss("#ffffff").f("#ff0000").r(this.x,this.y,WIDTH,WIDTH);
+			stage.addChild(shape);
+		}
 	}
 	var Snake = function(cavasId){
 		var WIDTH = 30;
@@ -17,10 +33,8 @@ var Snake = (function(){
 			l.addLast(body);
 		}
 		for(var i = 0; i < l.size(); i ++){
-			var shape = new createjs.Shape();
 			var body = l.get(i);
-			shape.graphics.ss("#ffffff").f("#000000").r(body.x,body.y,WIDTH,WIDTH);
-			stage.addChild(shape);
+			body.draw(stage);
 		}
 		stage.update();
 		createjs.Ticker.setFPS(2);
@@ -45,9 +59,10 @@ var Snake = (function(){
 			for(var i = 0; i < l.size(); i ++){
 				var shape = new createjs.Shape();
 				var body = l.get(i);
-				shape.graphics.ss("#ffffff").f("#000000").r(body.x,body.y,WIDTH,WIDTH);
-				stage.addChild(shape);
+				body.draw(stage);
 			}
+			var food = new Food(90,90);
+			food.draw(stage);
 			stage.update();
 		};
 		this.pause = function(){
@@ -62,7 +77,8 @@ var Snake = (function(){
 			return pause;
 		}
 		this.setDirection = function(d){
-			this.direction = d;
+			if(Math.abs(this.direction - d) != 2)
+				this.direction = d;
 		}
 	};
 	return Snake;
